@@ -1,0 +1,25 @@
+{
+  "name": "timesync-socket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tss.js",
+  "scripts": {
+    "prepublish": "babel src --out-dir client --source-maps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/oskarwalker/timesync-socket.git"
+  },
+  "author": "Oskar Walker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oskarwalker/timesync-socket/issues"
+  },
+  "homepage": "https://github.com/oskarwalker/timesync-socket#readme",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-latest": "^6.22.0"
+  }
+}
