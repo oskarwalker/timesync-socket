@@ -1,6 +1,6 @@
 {
   "name": "timesync-socket",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Client-server time-syncing with incrementing polling intervals over socket.io.",
   "main": "tss.js",
   "scripts": {
