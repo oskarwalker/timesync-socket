@@ -8,6 +8,9 @@ function onServerResponse (response) {
   this.offsets.push(diff)
   if (this.offsets.length > 5) {
     this.offsets.shift()
+    if (typeof this.onOffset === 'function') {
+      this.onOffset(this.offset())
+    }
   }
 }
 
@@ -23,18 +26,27 @@ class TSS {
   constructor () {
     this.offsets = []
     this.socket = undefined
+    this.onOffset = undefined
   }
 
-  setup (socket, options = { interval: 1000, idleInterval: 5000 }) {
+  setup (socket, options = { interval: 1000, idleInterval: 5000, onOffset: undefined }) {
+    if (typeof options.onOffset === 'function') {
+      this.onOffset = options.onOffset
+    }
     this.socket = socket
     this.socket.on(SERVER_RESPONSE_CHANNEL, onServerResponse.bind(this))
 
-    // Request time immediately
-    setTimeout(() => this.requestTime(), 0)
+    return new Promise((resolve, reject) => {
+      // Request time immediately
+      setTimeout(() => this.requestTime(), 0)
 
-    // Run initial sync, then at idle interval time
-    setFiniteInterval(() => this.requestTime(), options.interval, 5)
-    .then(() => setInterval(() => this.requestTime(), options.idleInterval))
+      // Run initial sync, then at idle interval time
+      setFiniteInterval(this.requestTime.bind(this), options.interval, 5)
+      .then(() => {
+        resolve(this.offset())
+        setInterval(this.requestTime.bind(this), options.idleInterval)
+      })
+    })
   }
 
   offset () {
