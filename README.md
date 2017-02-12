@@ -1,25 +1,30 @@
-# Timesync via Socket.io
+# Timesync via Socket.IO
 
 ## Installation
 ```
-npm install timesync-socket
+yarn install timesync-socket
 ```
 
 ## Client
 ```javascript
-import tts from 'timesync-socket/client'
+import tss from 'timesync-socket/client'
 
 const socket = io.connect()
-tts.setup(socket)
+tss.setup(socket, {
+  interval: 1000,
+  idleInterval: 5000,
+  onOffset: offset => console.log // Listen for change
+})
 
+// or get offset whenever
 const offset = tts.offset()
 ```
 
 ## Server
 ```javascript
-const tts = require('timesync-socket')
+const tss = require('timesync-socket')
 
-io.sockets.on('connection', socket => tts.setup(socket))
+io.sockets.on('connection', socket => tss.setup(socket))
 ```
 
 ### License
