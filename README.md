@@ -17,7 +17,7 @@ tss.setup(socket, {
 })
 
 // or get offset whenever
-const offset = tts.offset()
+const offset = tss.offset()
 ```
 
 ## Server
